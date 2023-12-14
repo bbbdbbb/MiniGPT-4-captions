@@ -414,16 +414,6 @@ def gradio_ask(user_message, chatbot, chat_state, gr_img, img_list, upload_flag,
     else:
         text_box_show = ''
 
-    print('user_message:', user_message)
-    print('chatbot:', chatbot)
-    print('chat_state:', chat_state)
-
-    print('gr_img:', gr_img)
-    print('img_list:', img_list)
-    print('upload_flag:', upload_flag)
-    print('replace_flag:', replace_flag)
-
-
     if isinstance(gr_img, dict):
         gr_img, mask = gr_img['image'], gr_img['mask']
     else:
@@ -449,9 +439,6 @@ def gradio_ask(user_message, chatbot, chat_state, gr_img, img_list, upload_flag,
         upload_flag = 0
 
     chat.ask(user_message, chat_state)
-    print('user_message: ', user_message)
-    print('chat_state: ', chat_state)
-
     chatbot = chatbot + [[user_message, None]]
 
     if '[identify]' in user_message:
@@ -464,37 +451,25 @@ def gradio_ask(user_message, chatbot, chat_state, gr_img, img_list, upload_flag,
 
 
 def gradio_answer(chatbot, chat_state, img_list, temperature):
-    print("---gradio_answer---")
-    print('img_list: ', img_list)
     llm_message = chat.answer(conv=chat_state,
                               img_list=img_list,
                               temperature=temperature,
                               max_new_tokens=500,
                               max_length=2000)[0]
     chatbot[-1][1] = llm_message
-    print('gradio_answer: ', llm_message)
-
     return chatbot, chat_state
 
 
 def gradio_stream_answer(chatbot, chat_state, img_list, temperature):
-    print('---gradio_stream_answer---')
-
-    # print('chatbot :', chatbot)
-    # print('chat_state :', chat_state)
-    # print('img_list :', img_list)
-
     if len(img_list) > 0:
         if not isinstance(img_list[0], torch.Tensor):
             chat.encode_img(img_list)
-    print(chat)
     streamer = chat.stream_answer(conv=chat_state,
                                   img_list=img_list,
                                   temperature=temperature,
                                   max_new_tokens=500,
                                   max_length=2000)
     output = ''
-    print('streamer:', streamer)
     for new_output in streamer:
         escapped = escape_markdown(new_output)
         output += escapped
@@ -670,21 +645,3 @@ with gr.Blocks() as demo:
     clear.click(gradio_reset, [chat_state, img_list], [chatbot, image, text_input, chat_state, img_list], queue=False)
 
 demo.launch(share=True, enable_queue=True)
-
-
-for i in range(5):
-    print(i)
-    send.click(
-        gradio_ask,
-        [text_input, chatbot, chat_state, image, img_list, upload_flag, replace_flag],
-        [text_input, chatbot, chat_state, img_list, upload_flag, replace_flag], queue=False
-    ).success(
-        gradio_stream_answer,
-        [chatbot, chat_state, img_list, temperature],
-        [chatbot, chat_state]
-    ).success(
-        gradio_visualize,
-        [chatbot, image],
-        [chatbot],
-        queue=False,
-    )
