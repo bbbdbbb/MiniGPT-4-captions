@@ -11,10 +11,11 @@ Join us on this project as we harness the capabilities of MiniGPT-v2 scripts to 
 You can git clone MiniGPT-v2 repository or our repository, creating a conda virtual environment according to official instructions.
 ```bash
 # git clone https://github.com/Vision-CAIR/MiniGPT-4.git
+# cd MiniGPT-4
 
 # To avoid unnecessary code, it is recommended to clone our repository
 git clone https://github.com/bbbdbbb/MiniGPT-4-captions.git
-cd MiniGPT-4
+cd MiniGPT-4-captions
 conda env create -f environment.yml
 conda activate minigptv
 ```
