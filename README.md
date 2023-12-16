@@ -19,3 +19,9 @@ cd MiniGPT-4-captions
 conda env create -f environment.yml
 conda activate minigptv
 ```
+
+**2. Download pre-train checkpoint**  
+You need to download the corresponding file from the official website. If you encounter any problems, you can tell me your problem through "[issues](https://github.com/bbbdbbb/MiniGPT-4-captions/issues)" and I will help solve it.  
+![](images/checkpoints.jpg)
+
+
