@@ -1,4 +1,5 @@
 import argparse
+import glob
 import os
 import random
 from collections import defaultdict
@@ -166,8 +167,9 @@ def Generate4imgs(chat, image_file_path, label_file_path, save_annatation_path, 
     
     annotations = []
     for t in tmp:
-        image_path = os.path.join(image_file_path, t[0] + '.png')
-        image = Image.open(image_path)
+        image_path = os.path.join(image_file_path, t[0] + '.*')
+        image_files = glob.glob(image_path)
+        image = Image.open(image_files[0])
         image = image.convert("RGB")
         img_list=[image]
         if len(img_list) > 0:
@@ -175,7 +177,7 @@ def Generate4imgs(chat, image_file_path, label_file_path, save_annatation_path, 
                 img_list = chat.encode_img(img_list)
 
         # prompt: f"<s>[INST] <Img><ImageHere></Img> question [/INST]"
-        rn = random.randint(0, 4)
+        rn = random.randint(0, len(questions)-1)
         prefix = f"<s>[INST] <Img><ImageHere></Img> "
         suffix = f"[/INST]"
         prompt = prefix + questions[rn] + suffix
@@ -229,7 +231,7 @@ def main():
 
     # # Generate caption based on one image
     # image_path = "./data/examples_v2/cockdial.png"
-    # prompt = f"<s>[INST] <Img><ImageHere></Img> What animal is in the picture? [/INST]"
+    # prompt = f"What animal is in the picture?"
     # annotation = Generate4img(chat, image_path, prompt)
 
     # # Generate caption based on images file
@@ -245,6 +247,14 @@ def main():
     # ]
     # annotation = Generate4imgs(chat, image_file_path, label_file_path, save_annatation_path, questions)
 
+    # # Generate label based on images file
+    # image_file_path = "./data/fruit/images"
+    # label_file_path = "./data/fruit/fruit.txt"
+    # save_annatation_path = "./data/fruit/fruit.json"
+    # questions = [
+    #     "[vqa] What is the name of a type of fruit?"
+    # ]
+    # annotation = Generate4imgs(chat, image_file_path, label_file_path, save_annatation_path, questions)
 
 
 if __name__ == "__main__":
