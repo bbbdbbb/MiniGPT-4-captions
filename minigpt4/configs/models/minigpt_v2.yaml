@@ -11,7 +11,9 @@ model:
   # generation configs
   prompt: ""
 
+  # set Llama-2-7b-chat-hf path
   llama_model: "/home/bbbdbbb/project/MiniGPT-4-main/checkpoints/Llama-2-7b-chat-hf"
+
   lora_r: 64
   lora_alpha: 16
 
