@@ -51,7 +51,7 @@ You can see that MiniGPT is very powerful in terms of functionality. However, du
 
 ### Single Image
 **1. Simple experience**  
-You can generate captions for images at a specified path by using the following [code](MiniGPTv2_annotate.py#L230), which provides a simple way to experience our script.
+You can generate captions for images at a specified path by using the following [code](MiniGPTv2_annotate.py#L232), which provides a simple way to experience our script.
 ```
 # Generate caption based on one image
 image_path = "./data/examples_v2/cockdial.png"
@@ -60,7 +60,7 @@ annotation = Generate4img(chat, image_path, prompt)
 ```
 ### Multiple Images
 **1. Generate images caption**  
-If you want to generate captions for your image dataset in bulk, please make sure to have a [text file](data/heco/heco.txt) containing the information about the images. You can then execute the following [code](MiniGPTv2_annotate.py#L235).
+If you want to generate captions for your image dataset in bulk, please make sure to have a [text file](data/heco/heco.txt) containing the information about the images. You can then execute the following [code](MiniGPTv2_annotate.py#L237).
 ```
 # Generate caption based on images file
 image_file_path = "./data/heco/images"
@@ -77,8 +77,20 @@ annotation = Generate4imgs(chat, image_file_path, label_file_path, save_annatati
 ```
 To avoid the single-mindedness and bias in the generated captions by the model, you can set multiple questions. Our script will randomly select a question as the prompt during runtime. The final results will be saved in a [JSON file](data/heco/heco.json).  
 
+**2. Generate images label**  
+If you want to create a dataset and quickly label the images, you can use the following [code](MiniGPTv2_annotate.py#L250) to generate labels for your images in bulk.
+```
+# Generate label based on images file
+image_file_path = "./data/fruit/images"
+label_file_path = "./data/fruit/fruit.txt"
+save_annatation_path = "./data/fruit/fruit.json"
+questions = [
+    "What is the name of a type of fruit?"
+]
+    annotation = Generate4imgs(chat, image_file_path, label_file_path, save_annatation_path, questions)
+```
+The generated labels will also be saved in a [JSON file](data/fruit/fruit.json).  
 
-
-
-
+## Acknowledgement
+- [MiniGPT-v2](https://github.com/Vision-CAIR/MiniGPT-4): Large Language Model as a Unified Interface for Vision-Language Multi-task Learning.
 
