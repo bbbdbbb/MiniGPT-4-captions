@@ -140,6 +140,10 @@ def Generate4img(chat, image_path, prompt):
         if not isinstance(img_list[0], torch.Tensor):
             img_list = chat.encode_img(img_list)
 
+    prefix = f"<s>[INST] <Img><ImageHere></Img> "
+    suffix = f" [/INST]"
+    prompt = prefix + prompt + suffix
+
     streamer = chat.stream_answer(prompt=prompt,
                             img_list=img_list,
                             temperature=0.6,
@@ -223,23 +227,23 @@ def main():
 
     chat = Chat(model, vis_processor, device=device)
 
-    # # Generate description based on one image
+    # # Generate caption based on one image
     # image_path = "./data/examples_v2/cockdial.png"
     # prompt = f"<s>[INST] <Img><ImageHere></Img> What animal is in the picture? [/INST]"
     # annotation = Generate4img(chat, image_path, prompt)
 
-    # Generate description based on images file
-    image_file_path = "./data/heco/images"
-    label_file_path = "./data/heco/heco.txt"
-    save_annatation_path = "./data/heco/heco.json"
-    questions = [
-        "What are the people doing in the picture?",
-        "What activities can be observed in the picture with the people?",
-        "How would you describe the actions of the individuals in the image?",
-        "Could you give me some details about the person's activity captured in the picture?",
-        "Please identify the specific actions or tasks being performed by the individuals in the picture.",
-    ]
-    annotation = Generate4imgs(chat, image_file_path, label_file_path, save_annatation_path, questions)
+    # # Generate caption based on images file
+    # image_file_path = "./data/heco/images"
+    # label_file_path = "./data/heco/heco.txt"
+    # save_annatation_path = "./data/heco/heco.json"
+    # questions = [
+    #     "What are the people doing in the picture?",
+    #     "What activities can be observed in the picture with the people?",
+    #     "How would you describe the actions of the individuals in the image?",
+    #     "Could you give me some details about the person's activity captured in the picture?",
+    #     "Please identify the specific actions or tasks being performed by the individuals in the picture.",
+    # ]
+    # annotation = Generate4imgs(chat, image_file_path, label_file_path, save_annatation_path, questions)
 
 
 
