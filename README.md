@@ -48,6 +48,11 @@ python demo_v2.py --cfg-path eval_configs/minigptv2_eval.yaml  --gpu-id 0
 
 ## Generating Captions
 You can see that MiniGPT is very powerful in terms of functionality. However, due to the complexity of the model's network input design, batch generation of captions is not possible directly. Therefore, we have developed a series of scripts based on the Gradio module used in the Demo, which can assist you in automatically generating captions for your dataset.  
+### Running our project
+You can run our project using the following code. Please pay attention to the instructions provided below to configure it according to your task requirements.
+```
+python MiniGPTv2_annotate.py --cfg-path eval_configs/minigptv2_eval.yaml  --gpu-id 0
+```
 
 ### Single Image
 **1. Simple experience**  
@@ -92,5 +97,5 @@ questions = [
 The generated labels will also be saved in a [JSON file](data/fruit/fruit.json).  
 
 ## Acknowledgement
-- [MiniGPT-v2](https://github.com/Vision-CAIR/MiniGPT-4): Large Language Model as a Unified Interface for Vision-Language Multi-task Learning.
+- [MiniGPT-v2](https://arxiv.org/abs/2310.09478): Large Language Model as a Unified Interface for Vision-Language Multi-task Learning.
 
